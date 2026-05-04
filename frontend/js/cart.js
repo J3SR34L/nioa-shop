@@ -74,7 +74,7 @@ function renderProducts(products) {
       : p.badge === 'sale'
       ? '<span class="card-badge badge-sale">Sale</span>'
       : '';
-    return '<div class="product-card" style="animation-delay:' + (i * 0.04) + 's">' +
+    return '<div class="product-card" style="animation-delay:' + (i * 0.04) + 's" onclick="window.location.href=\'product.html?id=' + p._id + '\'">' +
       '<div class="card-img">' +
         badge +
         '<div class="card-glow"></div>' +
