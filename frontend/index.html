@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIOA — Shop the Future</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- SPACE BACKGROUND -->
+<div class="space-bg"></div>
+<div class="stars" id="stars"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">NIOA</div>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="loginWithGoogle()">⬡ Login</button>
+    <button class="nav-btn" id="cart-btn">
+      ◈ Cart <span class="cart-count" id="badge">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-nebula"></div>
+  <div class="hero-tag">✦ New Collection 2099</div>
+  <h1 class="hero-title">
+    <span class="t1">Shop the</span>
+    <span class="t2">Future</span>
+  </h1>
+  <p class="hero-sub">Neural-linked products curated by AI. Delivered by drone within 3 minutes anywhere on the planet.</p>
+  <button class="hero-cta" onclick="document.querySelector('.shop-area').scrollIntoView({behavior:'smooth'})">
+    ▶ Explore Catalog
+  </button>
+</section>
+
+<!-- SHOP -->
+<div class="shop-area">
+  <div class="search-bar">
+    <span class="search-icon">⊙</span>
+    <input type="text" id="search" placeholder="Search NIOA catalog..."/>
+  </div>
+
+  <div class="filters-row">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="tech">Tech</button>
+    <button class="filter-btn" data-filter="wear">Wear</button>
+    <button class="filter-btn" data-filter="home">Home</button>
+    <button class="filter-btn" data-filter="audio">Audio</button>
+    <button class="filter-btn" data-filter="health">Health</button>
+  </div>
+
+  <div class="products-label" id="products-label">Loading...</div>
+  <div class="products-grid" id="products-grid"></div>
+</div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Cart</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">◈</div>
+      <p>Cart is empty</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-line">
+      <span class="cl-label">Items</span>
+      <span class="cl-val" id="cart-count-label">0</span>
+    </div>
+    <div class="cart-line">
+      <span class="cl-label">Shipping</span>
+      <span class="cl-val cl-free">Free</span>
+    </div>
+    <div class="cart-divider"></div>
+    <div class="cart-total-line">
+      <span class="ctl-label">Total</span>
+      <span class="ctl-amount" id="cart-total">$0</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Initiate Checkout</button>
+  </div>
+</div>
+
+<!-- T<!-- NEWSLETTER + FOOTER -->
+<section class="newsletter-section">
+  <div class="newsletter-inner">
+    <h2 class="newsletter-title">Stay Connected</h2>
+    <p class="newsletter-sub">Get neural notifications for exclusive deals and product launches</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="your.email@neural.net" class="newsletter-input" />
+      <button class="newsletter-btn" onclick="handleSubscribe()">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">NIOA</div>
+      <div class="footer-tagline">Neural Interface Online Automation</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Products</div>
+      <a href="#" class="footer-link">All Categories</a>
+      <a href="#" class="footer-link">New Arrivals</a>
+      <a href="#" class="footer-link">Best Sellers</a>
+      <a href="#" class="footer-link">Pre-Order</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Support</div>
+      <a href="#" class="footer-link">Help Center</a>
+      <a href="#" class="footer-link">Drone Delivery</a>
+      <a href="#" class="footer-link">Returns</a>
+      <a href="#" class="footer-link">Contact AI</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="#" class="footer-link">About</a>
+      <a href="#" class="footer-link">Careers</a>
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2099 NIOA. All rights reserved. Powered by Neural AI.</span>
+  </div>
+</footer>OAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Generate stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--o:${0.2+Math.random()*0.6};animation-delay:${Math.random()*4}s;width:${Math.random()>0.8?3:2}px;height:${Math.random()>0.8?3:2}px`;
+    starsEl.appendChild(s);
+  }
+</script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>
