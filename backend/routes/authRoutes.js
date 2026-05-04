@@ -10,7 +10,8 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.redirect(`http://127.0.0.1:5500/frontend/index.html?token=${token}`);
+  const origin = req.headers.origin || 'https://nioa-shop.vercel.app';
+res.redirect(`https://nioa-shop.vercel.app/index.html?token=${token}`);
   }
 );
 
