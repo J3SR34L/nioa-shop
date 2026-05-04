@@ -13,9 +13,30 @@ function logout() {
   window.location.reload();
 }
 
+// Grab token from URL after OAuth redirect
 const params = new URLSearchParams(window.location.search);
 const token = params.get('token');
 if (token) {
   localStorage.setItem(TOKEN_KEY, token);
-  window.history.replaceState({}, '', '/frontend/index.html');
+  window.history.replaceState({}, '', window.location.pathname);
 }
+
+// Update the login button based on auth state
+function updateAuthButton() {
+  const btn = document.getElementById('login-btn');
+  if (!btn) return;
+  if (getToken()) {
+    btn.textContent = '⬡ Logged In';
+    btn.style.borderColor = 'var(--cyan)';
+    btn.style.color = 'var(--cyan)';
+    btn.onclick = function() {
+      if (confirm('Log out of NIOA?')) logout();
+    };
+  } else {
+    btn.textContent = '⬡ Login';
+    btn.onclick = loginWithGoogle;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updateAuthButton);
+window.addEventListener('load', updateAuthButton);
