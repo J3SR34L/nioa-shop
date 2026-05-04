@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIOA — Admin Panel</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 2.5rem; position: relative; z-index: 1; }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+    .admin-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; }
+    .admin-title span { background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; align-items: start; }
+    .admin-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; }
+    .admin-card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+    .form-input { width: 100%; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: var(--cyan); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-select { width: 100%; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; cursor: pointer; }
+    .form-textarea { width: 100%; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; resize: vertical; min-height: 80px; transition: border-color 0.2s; }
+    .form-textarea:focus { border-color: var(--cyan); }
+    .submit-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--cyan), var(--violet)); border: none; color: var(--bg); font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(77,240,216,0.3); }
+    .clear-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+    .clear-btn:hover { border-color: var(--border2); color: var(--text); }
+    .products-list { display: flex; flex-direction: column; gap: 10px; }
+    .product-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); transition: border-color 0.2s; }
+    .product-row:hover { border-color: var(--border2); }
+    .pr-emoji { font-size: 28px; flex-shrink: 0; }
+    .pr-info { flex: 1; }
+    .pr-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .pr-meta { font-size: 11px; color: var(--muted); }
+    .pr-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .pr-edit { padding: 6px 14px; background: transparent; border: 1px solid var(--border2); color: var(--cyan); font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; }
+    .pr-edit:hover { background: rgba(77,240,216,0.1); }
+    .pr-delete { padding: 6px 14px; background: transparent; border: 1px solid rgba(244,114,182,0.3); color: var(--pink); font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; }
+    .pr-delete:hover { background: rgba(244,114,182,0.1); }
+    .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2rem; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; text-align: center; }
+    .stat-card-num { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--cyan); }
+    .stat-card-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    .login-wall { text-align: center; padding: 5rem 2rem; }
+    .login-wall h2 { font-family: 'Syne', sans-serif; font-size: 24px; margin-bottom: 1rem; }
+    .login-wall p { color: var(--muted); margin-bottom: 2rem; font-size: 14px; }
+  </style>
+</head>
+<body>
+<div class="space-bg"></div>
+<div class="stars" id="stars"></div>
+
+<nav class="nav">
+  <div class="nav-logo" style="cursor:pointer" onclick="window.location.href='index.html'">NIOA</div>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="window.location.href='index.html'">← Store</button>
+    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
+  </div>
+</nav>
+
+<div class="admin-wrap" id="admin-wrap">
+  <div class="login-wall">
+    <h2>Admin Access Required</h2>
+    <p>Please log in with your Google account to access the admin panel.</p>
+    <button class="submit-btn" style="width:auto;padding:12px 32px" onclick="loginWithGoogle()">Login with Google</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--o:${0.2+Math.random()*0.5};animation-delay:${Math.random()*4}s`;
+    starsEl.appendChild(s);
+  }
+</script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
