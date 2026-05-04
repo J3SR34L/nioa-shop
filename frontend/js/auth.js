@@ -5,7 +5,7 @@ function getToken() {
 }
 
 function loginWithGoogle() {
-  window.location.href = 'http://localhost:5000/api/auth/google';
+  window.location.href = 'https://nioa-shop-production.up.railway.app/api/auth/google';
 }
 
 function logout() {
@@ -13,7 +13,6 @@ function logout() {
   window.location.reload();
 }
 
-// Grab token from URL after OAuth redirect
 const params = new URLSearchParams(window.location.search);
 const token = params.get('token');
 if (token) {
@@ -21,7 +20,6 @@ if (token) {
   window.history.replaceState({}, '', window.location.pathname);
 }
 
-// Update the login button based on auth state
 function updateAuthButton() {
   const btn = document.getElementById('login-btn');
   if (!btn) return;
