@@ -65,7 +65,12 @@ var productImages = {
   'Smart Jacket AI':  'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=600&fit=crop&q=80',
   'Holo Projector':   'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=600&fit=crop&q=80',
   'NanoBot Cleaner':  'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=600&fit=crop&q=80',
-  'AR Glasses Lite':  'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600&h=600&fit=crop&q=80'
+  'AR Glasses Lite':  'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600&h=600&fit=crop&q=80',
+ 'Alienware m18 R2': 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/alienware-notebooks/alienware-m18-mlk/spi/ng/notebook-alienware-m18-r2-nt-black-relsize-500-ng.psd?fmt=jpg&wid=500&hei=279',
+'Alienware x16 R2': 'https://www.dell.com/wp-uploads/2024/02/2-3.jpg',
+'Alienware m16 R2':     'https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg',
+'Alienware x14 R2':      'https://sm.ign.com/ign_ap/deal/s/save-700-o/save-700-off-the-alienware-x14-r2-dells-thinnest-and-lightes_tcca.jpg',
+'Alienware Area-51m R2': 'https://i.ytimg.com/vi/BY2WIwKcaCQ/maxresdefault.jpg',
 };
 
 // INIT
@@ -143,11 +148,12 @@ function renderProducts(products) {
       : '';
 
     return '<div class="product-card" style="animation-delay:' + (i * 0.04) + 's" onclick="navigateTo(\'product.html?id=' + p._id + '\')">' +
-      '<div class="card-img">' +
-        badge +
-        '<div class="card-glow"></div>' +
-        getImageHTML(p) +
-      '</div>' +
+     '<div class="card-img">' +
+  badge +
+  '<div class="card-glow"></div>' +
+  getImageHTML(p) +
+  '<button class="card-qv-btn" onclick="event.stopPropagation();openQuickView(\'' + p._id + '\')">⊙ Quick View</button>' +
+'</div>' +
       '<div class="card-info">' +
         '<div class="card-cat">' + p.category + '</div>' +
         '<div class="card-name">' + p.name + '</div>' +
@@ -417,6 +423,50 @@ function initHero() {
   drawParticles();
 }
 
+// QUICK VIEW
+function openQuickView(id) {
+  var p = allProducts.find(function(p) { return p._id === id; });
+  if (!p) return;
+
+  var imgUrl = productImages[p.name];
+  var imgHTML = imgUrl
+    ? '<img src="' + imgUrl + '" alt="' + p.name + '">'
+    : '<div class="qv-img-emoji">' + (p.emoji || '📦') + '</div>';
+
+  var badge = p.badge === 'new'
+    ? '<span class="qv-badge badge-new">New</span>'
+    : p.badge === 'sale'
+    ? '<span class="qv-badge badge-sale">Sale</span>'
+    : '';
+
+  var stars = '★'.repeat(p.stars || 4) + '☆'.repeat(5 - (p.stars || 4));
+  var inCart = cart.some(function(c) { return c._id === p._id; });
+
+  document.getElementById('qv-img').innerHTML = imgHTML;
+  document.getElementById('qv-info').innerHTML =
+    badge +
+    '<div class="qv-cat">' + p.category + '</div>' +
+    '<div class="qv-name">' + p.name + '</div>' +
+    '<div class="qv-stars">' + stars + '</div>' +
+    '<div class="qv-price">' +
+      '<span class="qv-price-now">$' + p.price + '</span>' +
+      (p.oldPrice ? '<span class="qv-price-was">$' + p.oldPrice + '</span>' : '') +
+    '</div>' +
+    '<div class="qv-desc">' + (p.description || 'Premium futuristic product from the NIOA catalog.') + '</div>' +
+    '<div class="qv-actions">' +
+      '<button class="qv-add-btn" onclick="addToCart(\'' + p._id + '\');closeQuickView()">' +
+        (inCart ? '✓ Already in Cart' : '+ Add to Cart') +
+      '</button>' +
+      '<div class="qv-detail-btn" onclick="closeQuickView();navigateTo(\'product.html?id=' + p._id + '\')">View Full Details →</div>' +
+    '</div>';
+
+  document.getElementById('qv-overlay').classList.add('open');
+}
+
+function closeQuickView(e) {
+  if (e && e.target !== document.getElementById('qv-overlay')) return;
+  document.getElementById('qv-overlay').classList.remove('open');
+}
 document.addEventListener('DOMContentLoaded', function() {
   initHero();
   init();

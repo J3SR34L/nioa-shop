@@ -702,3 +702,220 @@ body {
 }
 
 body { animation: pageIn 0.5s ease forwards; }
+/* GLASSMORPHISM CARDS */
+.product-card {
+  background: rgba(10,16,32,0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(99,179,237,0.15) !important;
+}
+
+.product-card:hover {
+  background: rgba(15,22,45,0.8) !important;
+  border-color: rgba(77,240,216,0.4) !important;
+}
+
+/* QUICK VIEW MODAL */
+.qv-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.qv-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.qv-modal {
+  background: rgba(8,12,28,0.97);
+  border: 1px solid rgba(77,240,216,0.25);
+  max-width: 700px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.qv-overlay.open .qv-modal {
+  transform: translateY(0);
+}
+
+.qv-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.qv-close:hover { border-color: var(--pink); color: var(--pink); }
+
+.qv-img {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #090e1e, #0c1226);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.qv-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.qv-img-emoji {
+  font-size: 80px;
+}
+
+.qv-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.qv-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  width: fit-content;
+}
+
+.qv-cat {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.qv-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.qv-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; }
+
+.qv-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.qv-price-now {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+.qv-price-was {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.qv-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.qv-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.qv-add-btn {
+  padding: 12px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  border: none;
+  color: var(--bg);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.qv-add-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(77,240,216,0.3); }
+
+.qv-detail-btn {
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.qv-detail-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* QUICK VIEW BUTTON ON CARD */
+.card-qv-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background: rgba(4,7,15,0.9);
+  border: none;
+  border-top: 1px solid var(--border);
+  color: var(--cyan);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.25s;
+}
+
+.product-card:hover .card-qv-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .qv-modal { grid-template-columns: 1fr; }
+  .qv-img { height: 200px; border-right: none; border-bottom: 1px solid var(--border); }
+}

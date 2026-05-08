@@ -138,6 +138,14 @@
   <div class="products-label" id="products-label">Loading...</div>
   <div class="products-grid" id="products-grid"></div>
 </div>
+<!-- QUICK VIEW MODAL -->
+<div class="qv-overlay" id="qv-overlay" onclick="closeQuickView(event)">
+  <div class="qv-modal" id="qv-modal">
+    <button class="qv-close" onclick="closeQuickView()">✕</button>
+    <div class="qv-img" id="qv-img"></div>
+    <div class="qv-info" id="qv-info"></div>
+  </div>
+</div>
 
 <!-- CART OVERLAY -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>

@@ -8,6 +8,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
   await Product.deleteMany();
   
   await Product.insertMany([
+    // ORIGINAL NIOA PRODUCTS
     {
       name: 'Neural Visor X9',
       category: 'tech',
@@ -16,7 +17,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       emoji: '🥽',
       badge: 'sale',
       stars: 5,
-      description: 'The Neural Visor X9 is the most advanced mixed reality headset ever created. Featuring direct neural interface technology, 16K resolution per eye, and zero-latency haptic feedback. Experience reality like never before.',
+      description: 'The most advanced mixed reality headset ever created. Featuring direct neural interface technology, 16K resolution per eye, and zero-latency haptic feedback.',
       specs: ['16K per eye resolution', 'Neural interface technology', 'Zero-latency haptics', '8 hour battery life', 'Weight: 180g']
     },
     {
@@ -26,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       emoji: '🎧',
       badge: 'new',
       stars: 4,
-      description: 'Quantum-encrypted audio transmission with AI noise cancellation. These earbuds learn your hearing profile and adapt in real time for the perfect sonic experience.',
+      description: 'Quantum-encrypted audio transmission with AI noise cancellation. These earbuds learn your hearing profile and adapt in real time.',
       specs: ['Quantum encrypted audio', 'AI noise cancellation', '40hr battery life', 'Wireless charging', 'IPX8 waterproof']
     },
     {
@@ -56,7 +57,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       price: 479,
       emoji: '🔊',
       stars: 5,
-      description: 'Room-filling plasma wave audio technology delivers sound that you feel as much as hear. 360 degree holographic soundstage fills any space.',
+      description: 'Room-filling plasma wave audio technology delivers sound that you feel as much as hear. 360 degree holographic soundstage.',
       specs: ['Plasma wave technology', '360 soundstage', '500W output', 'Room calibration AI', 'Multi-room sync']
     },
     {
@@ -77,7 +78,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       emoji: '🧥',
       badge: 'sale',
       stars: 4,
-      description: 'Temperature-regulating smart jacket with built-in AI assistant, solar charging panels, and emergency beacon. The last jacket you will ever need.',
+      description: 'Temperature-regulating smart jacket with built-in AI assistant, solar charging panels, and emergency beacon.',
       specs: ['Temperature regulation', 'Solar charging', 'Built-in AI assistant', 'Emergency beacon', 'Self-cleaning fabric']
     },
     {
@@ -86,7 +87,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       price: 799,
       emoji: '🔮',
       stars: 5,
-      description: 'Transform any room into an immersive holographic environment. Perfect for entertainment, work presentations, or meditation experiences.',
+      description: 'Transform any room into an immersive holographic environment. Perfect for entertainment, work presentations, or meditation.',
       specs: ['Full room projection', '8K resolution', '270 degree coverage', 'Voice controlled', 'App ecosystem']
     },
     {
@@ -96,7 +97,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       emoji: '🤖',
       badge: 'new',
       stars: 4,
-      description: 'Microscopic cleaning robots that eliminate bacteria, viruses, and allergens from any surface at the molecular level. The future of hygiene.',
+      description: 'Microscopic cleaning robots that eliminate bacteria, viruses, and allergens from any surface at the molecular level.',
       specs: ['Molecular cleaning', 'Virus elimination', 'Safe for all surfaces', '1000 sq ft coverage', 'Reusable cartridges']
     },
     {
@@ -109,9 +110,65 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
       stars: 5,
       description: 'Lightweight augmented reality glasses that overlay digital information onto your world. Navigation, translation, and AI assistance always in view.',
       specs: ['All-day AR overlay', 'Real-time translation', 'AI assistant', '12hr battery', 'Prescription compatible']
+    },
+
+    // ALIENWARE LAPTOPS
+    {
+      name: 'Alienware m18 R2',
+      category: 'tech',
+      price: 2999,
+      oldPrice: 3499,
+      emoji: '💻',
+      badge: 'new',
+      stars: 5,
+      description: 'The most powerful Alienware laptop ever built. Features Intel Core i9-14900HX, NVIDIA RTX 4090 16GB, and an 18-inch QHD+ 240Hz display. Engineered for extreme gaming and content creation without compromise.',
+      specs: ['Intel Core i9-14900HX', 'NVIDIA RTX 4090 16GB', '18-inch QHD+ 240Hz', '64GB DDR5 RAM', '4TB NVMe SSD', 'Cherry MX keyboard', 'Windows 11 Home']
+    },
+    {
+      name: 'Alienware x16 R2',
+      category: 'tech',
+      price: 2499,
+      oldPrice: 2799,
+      emoji: '💻',
+      badge: 'sale',
+      stars: 5,
+      description: 'Ultra-thin yet powerfully built. The Alienware x16 R2 packs an Intel Core i9 processor and RTX 4080 into a sleek 16-inch chassis with a stunning QHD+ display.',
+      specs: ['Intel Core i9-14900HK', 'NVIDIA RTX 4080 12GB', '16-inch QHD+ 240Hz', '32GB DDR5 RAM', '2TB NVMe SSD', 'Per-key RGB keyboard', 'Windows 11 Home']
+    },
+    {
+      name: 'Alienware m16 R2',
+      category: 'tech',
+      price: 1999,
+      oldPrice: 2299,
+      emoji: '💻',
+      badge: 'sale',
+      stars: 4,
+      description: 'The perfect balance of performance and portability. The Alienware m16 R2 delivers desktop-class gaming performance in a refined 16-inch form factor.',
+      specs: ['Intel Core i7-14700HX', 'NVIDIA RTX 4070 8GB', '16-inch FHD+ 165Hz', '16GB DDR5 RAM', '1TB NVMe SSD', 'RGB backlit keyboard', 'Windows 11 Home']
+    },
+    {
+      name: 'Alienware x14 R2',
+      category: 'tech',
+      price: 1599,
+      oldPrice: 1899,
+      emoji: '💻',
+      badge: 'sale',
+      stars: 4,
+      description: 'The thinnest and lightest Alienware ever made. The x14 R2 is the ultimate ultraportable gaming laptop with serious RTX performance in a stunning 14-inch design.',
+      specs: ['Intel Core i7-13620H', 'NVIDIA RTX 4060 8GB', '14-inch FHD+ 144Hz', '16GB DDR5 RAM', '512GB NVMe SSD', 'Per-key AlienFX RGB', 'Windows 11 Home']
+    },
+    {
+      name: 'Alienware Area-51m R2',
+      category: 'tech',
+      price: 3999,
+      emoji: '💻',
+      badge: 'new',
+      stars: 5,
+      description: 'The legendary Alienware Area-51m R2 is the desktop replacement that defines ultimate gaming. With full desktop-class Intel Core i9 and NVIDIA RTX graphics, this is the most powerful laptop ever created.',
+      specs: ['Intel Core i9-10900K Desktop', 'NVIDIA RTX 2080 Super 8GB', '17.3-inch FHD 144Hz', '64GB DDR4 RAM', '2TB NVMe + 1TB HDD', 'Full mechanical keyboard', 'Dual 330W power adapters']
     }
   ]);
 
-  console.log('Products added with descriptions!');
+  console.log('All products added successfully!');
   mongoose.disconnect();
 });
