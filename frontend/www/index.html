@@ -9,31 +9,6 @@
 <body>
 
 <!-- SPACE BACKGROUND -->
- <!-- LOADING SCREEN -->
-<div id="loader">
-  <div class="loader-inner">
-    <div class="loader-hex">
-      <svg viewBox="0 0 100 100" width="120" height="120">
-        <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5"
-          fill="none" stroke="url(#lg)" stroke-width="1.5" stroke-dasharray="240" stroke-dashoffset="240">
-          <animate attributeName="stroke-dashoffset" from="240" to="0" dur="1.5s" fill="freeze"/>
-        </polygon>
-        <defs>
-          <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#4df0d8"/>
-            <stop offset="100%" stop-color="#a78bfa"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-    <div class="loader-logo">NIOA</div>
-    <div class="loader-text" id="loader-text">Initializing...</div>
-    <div class="loader-bar">
-      <div class="loader-bar-fill" id="loader-bar"></div>
-    </div>
-    <div class="loader-percent" id="loader-percent">0%</div>
-  </div>
-</div>
 <div class="space-bg"></div>
 <div class="stars" id="stars"></div>
 
@@ -47,76 +22,19 @@
     </button>
   </div>
 </nav>
-    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
-    <button class="nav-btn" id="cart-btn">
-      ◈ Cart <span class="cart-count" id="badge">0</span>
-    </button>
-  </div>
-</nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-nebula"></div>
-  <canvas id="hero-particles"></canvas>
-
-  <div class="hero-content">
-    <div class="hero-tag">
-      <span class="tag-dot"></span>
-      <span id="hero-tag-text"></span>
-    </div>
-
-    <h1 class="hero-title">
-      <span class="t1">Shop the</span>
-      <span class="t2" id="hero-word">Future</span>
-    </h1>
-
-    <p class="hero-sub">Neural-linked products curated by AI. Delivered by drone within 3 minutes anywhere on the planet.</p>
-
-    <div class="hero-actions-row">
-      <button class="hero-cta" onclick="document.querySelector('.shop-area').scrollIntoView({behavior:'smooth'})">
-        ▶ Explore Catalog
-      </button>
-      <div class="hero-live-badge">
-        <span class="live-dot"></span>
-        <span>Live Inventory</span>
-      </div>
-    </div>
-
-    <div class="hero-stats-row">
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-target="2400">0</div>
-        <div class="hero-stat-label">Products</div>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-target="98">0</div>
-        <div class="hero-stat-label">% Satisfaction</div>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-target="3">0</div>
-        <div class="hero-stat-label">Min Delivery</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-floating-cards">
-    <div class="float-card fc1">
-      <div class="fc-emoji">🥽</div>
-      <div class="fc-name">Neural Visor</div>
-      <div class="fc-price">$899</div>
-    </div>
-    <div class="float-card fc2">
-      <div class="fc-emoji">🎧</div>
-      <div class="fc-name">Quantum Buds</div>
-      <div class="fc-price">$349</div>
-    </div>
-    <div class="float-card fc3">
-      <div class="fc-emoji">⌚</div>
-      <div class="fc-name">HoloWatch</div>
-      <div class="fc-price">$599</div>
-    </div>
-  </div>
+  <div class="hero-tag">✦ New Collection 2099</div>
+  <h1 class="hero-title">
+    <span class="t1">Shop the</span>
+    <span class="t2">Future</span>
+  </h1>
+  <p class="hero-sub">Neural-linked products curated by AI. Delivered by drone within 3 minutes anywhere on the planet.</p>
+  <button class="hero-cta" onclick="document.querySelector('.shop-area').scrollIntoView({behavior:'smooth'})">
+    ▶ Explore Catalog
+  </button>
 </section>
 
 <!-- SHOP -->
@@ -172,7 +90,7 @@
   </div>
 </div>
 
-<!-- NEWSLETTER + FOOTER -->
+<!-- T<!-- NEWSLETTER + FOOTER -->
 <section class="newsletter-section">
   <div class="newsletter-inner">
     <h2 class="newsletter-title">Stay Connected</h2>
@@ -215,7 +133,7 @@
   <div class="footer-bottom">
     <span>© 2099 NIOA. All rights reserved. Powered by Neural AI.</span>
   </div>
-</footer>
+</footer>OAST -->
 <div class="toast" id="toast"></div>
 
 <script>

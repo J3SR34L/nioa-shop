@@ -38,19 +38,3 @@ function updateAuthButton() {
 
 document.addEventListener('DOMContentLoaded', updateAuthButton);
 window.addEventListener('load', updateAuthButton);
-// SMOOTH PAGE NAVIGATION
-function navigateTo(url) {
-  document.body.classList.add('page-transition-out');
-  setTimeout(function() {
-    window.location.href = url;
-  }, 380);
-}
-
-// Back button smooth transition
-var backBtns = document.querySelectorAll('.back-btn');
-backBtns.forEach(function(btn) {
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    navigateTo('index.html');
-  });
-});

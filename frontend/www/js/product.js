@@ -27,10 +27,7 @@ async function loadProduct() {
   }
 }
 
-var currentProduct;
-
 function renderProduct(p) {
-  currentProduct = p; // ADD THIS LINE
   var stars = '★'.repeat(p.stars || 4) + '☆'.repeat(5 - (p.stars || 4));
   var imgUrl = productImages[p.name];
   var imgHTML = imgUrl
@@ -69,28 +66,7 @@ function renderProduct(p) {
 }
 
 function addToCartAndOpen(id) {
-  // Load existing cart from localStorage
-  var existingCart = JSON.parse(localStorage.getItem('nioa_cart') || '[]');
-  
-  // Check if already in cart
-  if (existingCart.some(function(c) { return c._id === id; })) {
-    openCart();
-    return;
-  }
-  
-  // Add current product to cart
-  existingCart.push(currentProduct);
-  localStorage.setItem('nioa_cart', JSON.stringify(existingCart));
-  
-  // Update badge
-  var badge = document.getElementById('badge');
-  if (badge) badge.textContent = existingCart.length;
-  
-  // Update button
-  var btn = document.querySelector('.detail-buy-btn');
-  if (btn) btn.textContent = '✓ Added to Cart';
-  
-  showToast(currentProduct.name + ' added!');
+  addToCart(id);
   openCart();
 }
 

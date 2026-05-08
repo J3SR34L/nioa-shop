@@ -1,0 +1,9 @@
+{
+  "appId": "com.nioa.shop",
+  "appName": "NIOA Shop",
+  "webDir": "www",
+  "server": {
+    "url": "https://nioa-shop.vercel.app",
+    "cleartext": true
+  }
+}
