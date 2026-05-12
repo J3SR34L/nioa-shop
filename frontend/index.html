@@ -37,9 +37,88 @@
 <div class="space-bg"></div>
 <div class="stars" id="stars"></div>
 
-<!-- NAV -->
-<nav class="nav">
+<!-- NAV --><nav class="nav">
+  <button class="hamburger-btn" onclick="openSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
   <div class="nav-logo">NIOA</div>
+  <!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">NIOA</div>
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  </div>
+
+  <div class="sidebar-user" id="sidebar-user">
+    <div class="sidebar-avatar">👤</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name">Guest User</div>
+      <div class="sidebar-user-status">Not logged in</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-link" onclick="closeSidebar();window.scrollTo({top:0,behavior:'smooth'})">
+      <span class="sidebar-icon">🏠</span>
+      <span>Home</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+    <a class="sidebar-link" onclick="closeSidebar();document.querySelector('.shop-area').scrollIntoView({behavior:'smooth'})">
+      <span class="sidebar-icon">🛍️</span>
+      <span>Catalog</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+    <a class="sidebar-link" onclick="closeSidebar();loginWithGoogle()">
+      <span class="sidebar-icon">👤</span>
+      <span>My Account</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+    <a class="sidebar-link" onclick="closeSidebar()">
+      <span class="sidebar-icon">📦</span>
+      <span>My Orders</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+    <a class="sidebar-link" onclick="closeSidebar()">
+      <span class="sidebar-icon">❤️</span>
+      <span>Wishlist</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+
+    <div class="sidebar-divider"></div>
+
+    <a class="sidebar-link" onclick="closeSidebar()">
+      <span class="sidebar-icon">⚙️</span>
+      <span>Settings</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+    <a class="sidebar-link" onclick="closeSidebar()">
+      <span class="sidebar-icon">📞</span>
+      <span>Contact</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+    <a class="sidebar-link" onclick="closeSidebar()">
+      <span class="sidebar-icon">ℹ️</span>
+      <span>About</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+
+    <div class="sidebar-divider"></div>
+
+    <a class="sidebar-link sidebar-logout" id="sidebar-auth-btn" onclick="closeSidebar();loginWithGoogle()">
+      <span class="sidebar-icon">🔐</span>
+      <span id="sidebar-auth-text">Login</span>
+      <span class="sidebar-arrow">→</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-text">© 2099 NIOA. All rights reserved.</div>
+  </div>
+</div>
+
   <div class="nav-actions">
     <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
     <button class="nav-btn" id="cart-btn">

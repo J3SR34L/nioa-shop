@@ -54,3 +54,24 @@ backBtns.forEach(function(btn) {
     navigateTo('index.html');
   });
 });
+// SIDEBAR
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+
+  // Update auth button in sidebar
+  var authBtn = document.getElementById('sidebar-auth-btn');
+  var authText = document.getElementById('sidebar-auth-text');
+  if (getToken()) {
+    if (authText) authText.textContent = 'Logout';
+    if (authBtn) authBtn.onclick = function() { closeSidebar(); logout(); };
+  } else {
+    if (authText) authText.textContent = 'Login';
+    if (authBtn) authBtn.onclick = function() { closeSidebar(); loginWithGoogle(); };
+  }
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
