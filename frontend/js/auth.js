@@ -96,6 +96,61 @@ async function initAuth() {
   var user = await fetchUserInfo();
   updateAuthButton(user);
   updateSidebarUser(user);
+
+  // Show welcome message if just logged in
+  var justLoggedIn = sessionStorage.getItem('nioa_just_logged_in');
+  if (user && user.name && !justLoggedIn) {
+    sessionStorage.setItem('nioa_just_logged_in', 'true');
+    var hour = new Date().getHours();
+    var greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    var firstName = user.name.split(' ')[0];
+    setTimeout(function() {
+      showWelcomeBanner(greeting + ', ' + firstName + '! 👋');
+    }, 1000);
+  }
+}
+
+function showWelcomeBanner(msg) {
+  var banner = document.createElement('div');
+  banner.style.cssText = `
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: rgba(8,12,28,0.95);
+    border: 1px solid var(--cyan);
+    color: var(--text);
+    padding: 14px 28px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    z-index: 999;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 40px rgba(77,240,216,0.2);
+    opacity: 0;
+    transition: all 0.4s ease;
+    white-space: nowrap;
+  `;
+  banner.textContent = msg;
+  document.body.appendChild(banner);
+
+  setTimeout(function() {
+    banner.style.opacity = '1';
+    banner.style.transform = 'translateX(-50%) translateY(0)';
+  }, 100);
+
+  setTimeout(function() {
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateX(-50%) translateY(-20px)';
+    setTimeout(function() { banner.remove(); }, 400);
+  }, 4000);
+}
+
+  // Then fetch fresh data
+  var user = await fetchUserInfo();
+  updateAuthButton(user);
+  updateSidebarUser(user);
 }
 
 // SIDEBAR
