@@ -1,3 +1,4 @@
+const User = require('../models/User');
 const router = require('express').Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -15,12 +16,19 @@ res.redirect(`https://nioa-shop.vercel.app/index.html?token=${token}`);
   }
 );
 
-router.get('/me', (req, res) => {
+router.get('/me', async (req, res) => {
   const auth = req.headers.authorization;
   if (!auth) return res.status(401).json({ error: 'No token' });
   try {
     const decoded = jwt.verify(auth.split(' ')[1], process.env.JWT_SECRET);
-    res.json({ userId: decoded.id });
+    const user = await User.findById(decoded.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json({
+      userId: decoded.id,
+      name: user.displayName,
+      email: user.email,
+      avatar: user.avatar
+    });
   } catch {
     res.status(401).json({ error: 'Invalid token' });
   }
