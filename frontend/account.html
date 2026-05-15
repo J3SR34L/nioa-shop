@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIOA — My Account</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .account-wrap { max-width: 800px; margin: 0 auto; padding: 3rem 2.5rem; position: relative; z-index: 1; }
+    .account-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .account-avatar { width: 80px; height: 80px; border: 2px solid var(--cyan); display: flex; align-items: center; justify-content: center; font-size: 36px; overflow: hidden; flex-shrink: 0; }
+    .account-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .account-name { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+    .account-email { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+    .account-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(77,240,216,0.3); padding: 4px 12px; margin-top: 8px; }
+    .account-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 2rem; }
+    .account-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; transition: all 0.2s; cursor: pointer; }
+    .account-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+    .account-card-icon { font-size: 32px; margin-bottom: 1rem; }
+    .account-card-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .account-card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .account-section-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.25rem; }
+    .account-info-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .account-info-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .account-info-value { font-size: 14px; color: var(--text); }
+    .logout-btn { width: 100%; padding: 1rem; background: transparent; border: 1px solid rgba(244,114,182,0.3); color: var(--pink); font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-top: 2rem; }
+    .logout-btn:hover { background: rgba(244,114,182,0.1); border-color: var(--pink); }
+    .login-prompt { text-align: center; padding: 5rem 2rem; }
+    .login-prompt h2 { font-family: 'Syne', sans-serif; font-size: 24px; margin-bottom: 1rem; }
+    .login-prompt p { color: var(--muted); margin-bottom: 2rem; font-size: 14px; }
+    .login-prompt-btn { padding: 14px 32px; background: linear-gradient(135deg, var(--cyan), var(--violet)); border: none; color: var(--bg); font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; cursor: pointer; }
+    @media (max-width: 768px) { .account-grid { grid-template-columns: 1fr; } .account-wrap { padding: 2rem 1.25rem; } }
+  </style>
+</head>
+<body>
+<div class="space-bg"></div>
+<div class="stars" id="stars"></div>
+
+<nav class="nav">
+  <button class="hamburger-btn" onclick="openSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-logo" onclick="navigateTo('index.html')" style="cursor:pointer">NIOA</div>
+  <div class="nav-actions">
+    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
+    <button class="nav-btn" id="cart-btn">
+      ◈ Cart <span class="cart-count" id="badge">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">NIOA</div>
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  </div>
+  <div class="sidebar-user">
+    <div class="sidebar-avatar">👤</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name">Guest User</div>
+      <div class="sidebar-user-status">Not logged in</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('index.html')"><span class="sidebar-icon">🏠</span><span>Home</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('index.html')"><span class="sidebar-icon">🛍️</span><span>Catalog</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link active" onclick="closeSidebar()"><span class="sidebar-icon">👤</span><span>My Account</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('orders.html')"><span class="sidebar-icon">📦</span><span>My Orders</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('wishlist.html')"><span class="sidebar-icon">❤️</span><span>Wishlist</span><span class="sidebar-arrow">→</span></a>
+    <div class="sidebar-divider"></div>
+    <a class="sidebar-link" onclick="closeSidebar()"><span class="sidebar-icon">⚙️</span><span>Settings</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar()"><span class="sidebar-icon">📞</span><span>Contact</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar()"><span class="sidebar-icon">ℹ️</span><span>About</span><span class="sidebar-arrow">→</span></a>
+    <div class="sidebar-divider"></div>
+    <a class="sidebar-link sidebar-logout" id="sidebar-auth-btn" onclick="closeSidebar();loginWithGoogle()"><span class="sidebar-icon">🔐</span><span id="sidebar-auth-text">Login</span><span class="sidebar-arrow">→</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-text">© 2099 NIOA. All rights reserved.</div>
+  </div>
+</div>
+
+<div class="account-wrap" id="account-wrap">
+  <div class="login-prompt">
+    <h2>Sign in to view your account</h2>
+    <p>Login with Google to access your account details, orders and wishlist.</p>
+    <button class="login-prompt-btn" onclick="loginWithGoogle()">Login with Google</button>
+  </div>
+</div>
+
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Cart</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty"><div class="cart-empty-icon">◈</div><p>Cart is empty</p></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-line"><span class="cl-label">Items</span><span class="cl-val" id="cart-count-label">0</span></div>
+    <div class="cart-line"><span class="cl-label">Shipping</span><span class="cl-val cl-free">Free</span></div>
+    <div class="cart-divider"></div>
+    <div class="cart-total-line"><span class="ctl-label">Total</span><span class="ctl-amount" id="cart-total">$0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Initiate Checkout</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var starsEl = document.getElementById('stars');
+  for (var i = 0; i < 80; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = 'left:' + Math.random()*100 + '%;top:' + Math.random()*100 + '%;--d:' + (2+Math.random()*4) + 's;--o:' + (0.2+Math.random()*0.5) + ';animation-delay:' + Math.random()*4 + 's';
+    starsEl.appendChild(s);
+  }
+
+  function loadAccount() {
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem('nioa_user')); } catch(e) {}
+    if (!user || !user.name) return;
+
+    var cart = [];
+    try { cart = JSON.parse(localStorage.getItem('nioa_cart') || '[]'); } catch(e) {}
+
+    document.getElementById('account-wrap').innerHTML =
+      '<div class="account-header">' +
+        '<div class="account-avatar">' +
+          (user.avatar ? '<img src="' + user.avatar + '" alt="avatar">' : '👤') +
+        '</div>' +
+        '<div>' +
+          '<div class="account-name">' + user.name + '</div>' +
+          '<div class="account-email">' + user.email + '</div>' +
+          '<div class="account-badge">✦ NIOA Member</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="account-grid">' +
+        '<div class="account-card" onclick="navigateTo(\'orders.html\')">' +
+          '<div class="account-card-icon">📦</div>' +
+          '<div class="account-card-title">My Orders</div>' +
+          '<div class="account-card-desc">View your order history and track deliveries</div>' +
+        '</div>' +
+        '<div class="account-card" onclick="navigateTo(\'wishlist.html\')">' +
+          '<div class="account-card-icon">❤️</div>' +
+          '<div class="account-card-title">Wishlist</div>' +
+          '<div class="account-card-desc">Products you\'ve saved for later</div>' +
+        '</div>' +
+        '<div class="account-card" onclick="openCart()">' +
+          '<div class="account-card-icon">🛒</div>' +
+          '<div class="account-card-title">Cart</div>' +
+          '<div class="account-card-desc">' + cart.length + ' item' + (cart.length !== 1 ? 's' : '') + ' in your cart</div>' +
+        '</div>' +
+        '<div class="account-card" onclick="navigateTo(\'index.html\')">' +
+          '<div class="account-card-icon">🛍️</div>' +
+          '<div class="account-card-title">Browse Catalog</div>' +
+          '<div class="account-card-desc">Continue shopping the NIOA catalog</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="account-section-title">Account Details</div>' +
+      '<div class="account-info-row"><span class="account-info-label">Full Name</span><span class="account-info-value">' + user.name + '</span></div>' +
+      '<div class="account-info-row"><span class="account-info-label">Email</span><span class="account-info-value">' + user.email + '</span></div>' +
+      '<div class="account-info-row"><span class="account-info-label">Member Since</span><span class="account-info-value">2099</span></div>' +
+      '<div class="account-info-row"><span class="account-info-label">Account Type</span><span class="account-info-value">Google OAuth</span></div>' +
+
+      '<button class="logout-btn" onclick="if(confirm(\'Log out of NIOA?\')) logout()">⬡ Sign Out</button>';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    loadAccount();
+  });
+  window.addEventListener('load', function() {
+    loadAccount();
+  });
+</script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

@@ -8,8 +8,7 @@
 </head>
 <body>
 
-<!-- SPACE BACKGROUND -->
- <!-- LOADING SCREEN -->
+<!-- LOADING SCREEN -->
 <div id="loader">
   <div class="loader-inner">
     <div class="loader-hex">
@@ -34,32 +33,41 @@
     <div class="loader-percent" id="loader-percent">0%</div>
   </div>
 </div>
+
+<!-- SPACE BACKGROUND -->
 <div class="space-bg"></div>
 <div class="stars" id="stars"></div>
 
-<!-- NAV --><nav class="nav">
+<!-- NAV -->
+<nav class="nav">
   <button class="hamburger-btn" onclick="openSidebar()">
     <span></span>
     <span></span>
     <span></span>
   </button>
   <div class="nav-logo">NIOA</div>
-  <!-- SIDEBAR -->
+  <div class="nav-actions">
+    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
+    <button class="nav-btn" id="cart-btn">
+      ◈ Cart <span class="cart-count" id="badge">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- SIDEBAR -->
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-logo">NIOA</div>
     <button class="sidebar-close" onclick="closeSidebar()">✕</button>
   </div>
-
-  <div class="sidebar-user" id="sidebar-user">
+  <div class="sidebar-user">
     <div class="sidebar-avatar">👤</div>
     <div class="sidebar-user-info">
       <div class="sidebar-user-name">Guest User</div>
       <div class="sidebar-user-status">Not logged in</div>
     </div>
   </div>
-
   <nav class="sidebar-nav">
     <a class="sidebar-link" onclick="closeSidebar();window.scrollTo({top:0,behavior:'smooth'})">
       <span class="sidebar-icon">🏠</span>
@@ -71,24 +79,22 @@
       <span>Catalog</span>
       <span class="sidebar-arrow">→</span>
     </a>
-    <a class="sidebar-link" onclick="closeSidebar();loginWithGoogle()">
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('account.html')">
       <span class="sidebar-icon">👤</span>
       <span>My Account</span>
       <span class="sidebar-arrow">→</span>
     </a>
-    <a class="sidebar-link" onclick="closeSidebar()">
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('orders.html')">
       <span class="sidebar-icon">📦</span>
       <span>My Orders</span>
       <span class="sidebar-arrow">→</span>
     </a>
-    <a class="sidebar-link" onclick="closeSidebar()">
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('wishlist.html')">
       <span class="sidebar-icon">❤️</span>
       <span>Wishlist</span>
       <span class="sidebar-arrow">→</span>
     </a>
-
     <div class="sidebar-divider"></div>
-
     <a class="sidebar-link" onclick="closeSidebar()">
       <span class="sidebar-icon">⚙️</span>
       <span>Settings</span>
@@ -104,53 +110,32 @@
       <span>About</span>
       <span class="sidebar-arrow">→</span>
     </a>
-
     <div class="sidebar-divider"></div>
-
     <a class="sidebar-link sidebar-logout" id="sidebar-auth-btn" onclick="closeSidebar();loginWithGoogle()">
       <span class="sidebar-icon">🔐</span>
       <span id="sidebar-auth-text">Login</span>
       <span class="sidebar-arrow">→</span>
     </a>
   </nav>
-
   <div class="sidebar-footer">
     <div class="sidebar-footer-text">© 2099 NIOA. All rights reserved.</div>
   </div>
 </div>
 
-  <div class="nav-actions">
-    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
-    <button class="nav-btn" id="cart-btn">
-      ◈ Cart <span class="cart-count" id="badge">0</span>
-    </button>
-  </div>
-</nav>
-    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
-    <button class="nav-btn" id="cart-btn">
-      ◈ Cart <span class="cart-count" id="badge">0</span>
-    </button>
-  </div>
-</nav>
-
 <!-- HERO -->
 <section class="hero">
   <div class="hero-nebula"></div>
   <canvas id="hero-particles"></canvas>
-
   <div class="hero-content">
     <div class="hero-tag">
       <span class="tag-dot"></span>
       <span id="hero-tag-text"></span>
     </div>
-
     <h1 class="hero-title">
       <span class="t1">Shop the</span>
       <span class="t2" id="hero-word">Future</span>
     </h1>
-
     <p class="hero-sub">Neural-linked products curated by AI. Delivered by drone within 3 minutes anywhere on the planet.</p>
-
     <div class="hero-actions-row">
       <button class="hero-cta" onclick="document.querySelector('.shop-area').scrollIntoView({behavior:'smooth'})">
         ▶ Explore Catalog
@@ -160,7 +145,6 @@
         <span>Live Inventory</span>
       </div>
     </div>
-
     <div class="hero-stats-row">
       <div class="hero-stat">
         <div class="hero-stat-num" data-target="2400">0</div>
@@ -178,7 +162,6 @@
       </div>
     </div>
   </div>
-
   <div class="hero-floating-cards">
     <div class="float-card fc1">
       <div class="fc-emoji">🥽</div>
@@ -204,7 +187,6 @@
     <span class="search-icon">⊙</span>
     <input type="text" id="search" placeholder="Search NIOA catalog..."/>
   </div>
-
   <div class="filters-row">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="tech">Tech</button>
@@ -213,10 +195,10 @@
     <button class="filter-btn" data-filter="audio">Audio</button>
     <button class="filter-btn" data-filter="health">Health</button>
   </div>
-
   <div class="products-label" id="products-label">Loading...</div>
   <div class="products-grid" id="products-grid"></div>
 </div>
+
 <!-- QUICK VIEW MODAL -->
 <div class="qv-overlay" id="qv-overlay" onclick="closeQuickView(event)">
   <div class="qv-modal" id="qv-modal">
@@ -303,15 +285,15 @@
     <span>© 2099 NIOA. All rights reserved. Powered by Neural AI.</span>
   </div>
 </footer>
+
 <div class="toast" id="toast"></div>
 
 <script>
-  // Generate stars
-  const starsEl = document.getElementById('stars');
-  for (let i = 0; i < 120; i++) {
-    const s = document.createElement('div');
+  var starsEl = document.getElementById('stars');
+  for (var i = 0; i < 120; i++) {
+    var s = document.createElement('div');
     s.className = 'star';
-    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--o:${0.2+Math.random()*0.6};animation-delay:${Math.random()*4}s;width:${Math.random()>0.8?3:2}px;height:${Math.random()>0.8?3:2}px`;
+    s.style.cssText = 'left:' + Math.random()*100 + '%;top:' + Math.random()*100 + '%;--d:' + (2+Math.random()*4) + 's;--o:' + (0.2+Math.random()*0.6) + ';animation-delay:' + Math.random()*4 + 's;width:' + (Math.random()>0.8?3:2) + 'px;height:' + (Math.random()>0.8?3:2) + 'px';
     starsEl.appendChild(s);
   }
 </script>
