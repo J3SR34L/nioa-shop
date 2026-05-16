@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIOA — Wishlist</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .wishlist-wrap { max-width: 1000px; margin: 0 auto; padding: 3rem 2.5rem; position: relative; z-index: 1; }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; }
+    .page-title { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; }
+    .page-title span { background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-count { font-size: 12px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+    .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .wishlist-card { background: var(--card); border: 1px solid var(--border); position: relative; transition: all 0.3s; animation: fadeup 0.4s ease both; }
+    .wishlist-card:hover { border-color: rgba(77,240,216,0.3); transform: translateY(-4px); }
+    .wc-img { height: 180px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #090e1e, #0c1226); border-bottom: 1px solid var(--border); overflow: hidden; position: relative; }
+    .wc-img img { width: 100%; height: 100%; object-fit: cover; }
+    .wc-img-emoji { font-size: 72px; }
+    .wc-remove { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; background: rgba(4,7,15,0.8); border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .wc-remove:hover { border-color: var(--pink); color: var(--pink); }
+    .wc-info { padding: 1rem 1.1rem 1.1rem; }
+    .wc-cat { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--violet); margin-bottom: 6px; }
+    .wc-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .wc-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .wc-price { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--cyan); }
+    .wc-add-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: rgba(77,240,216,0.08); border: 1px solid rgba(77,240,216,0.3); color: var(--cyan); font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; }
+    .wc-add-btn:hover { background: rgba(77,240,216,0.18); }
+    .empty-wishlist { text-align: center; padding: 6rem 2rem; color: var(--muted); }
+    .empty-wishlist-icon { font-size: 64px; margin-bottom: 1.5rem; opacity: 0.3; }
+    .empty-wishlist h3 { font-family: 'Syne', sans-serif; font-size: 22px; margin-bottom: 0.75rem; color: var(--text); }
+    .empty-wishlist p { font-size: 14px; margin-bottom: 2rem; }
+    .browse-btn { padding: 12px 28px; background: linear-gradient(135deg, var(--cyan), var(--violet)); border: none; color: var(--bg); font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; cursor: pointer; }
+    @media (max-width: 768px) { .wishlist-wrap { padding: 2rem 1.25rem; } }
+  </style>
+</head>
+<body>
+<div class="space-bg"></div>
+<div class="stars" id="stars"></div>
+
+<nav class="nav">
+  <button class="hamburger-btn" onclick="openSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-logo" onclick="navigateTo('index.html')" style="cursor:pointer">NIOA</div>
+  <div class="nav-actions">
+    <button class="nav-btn" id="login-btn" onclick="loginWithGoogle()">⬡ Login</button>
+    <button class="nav-btn" onclick="navigateTo('wishlist.html')">♡ Wishlist <span class="cart-count" id="wishlist-badge">0</span></button>
+    <button class="nav-btn" id="cart-btn">◈ Cart <span class="cart-count" id="badge">0</span></button>
+  </div>
+</nav>
+
+<!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">NIOA</div>
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  </div>
+  <div class="sidebar-user">
+    <div class="sidebar-avatar">👤</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name">Guest User</div>
+      <div class="sidebar-user-status">Not logged in</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('index.html')"><span class="sidebar-icon">🏠</span><span>Home</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('index.html')"><span class="sidebar-icon">🛍️</span><span>Catalog</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('account.html')"><span class="sidebar-icon">👤</span><span>My Account</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar();navigateTo('orders.html')"><span class="sidebar-icon">📦</span><span>My Orders</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link active" onclick="closeSidebar()"><span class="sidebar-icon">❤️</span><span>Wishlist</span><span class="sidebar-arrow">→</span></a>
+    <div class="sidebar-divider"></div>
+    <a class="sidebar-link" onclick="closeSidebar()"><span class="sidebar-icon">⚙️</span><span>Settings</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar()"><span class="sidebar-icon">📞</span><span>Contact</span><span class="sidebar-arrow">→</span></a>
+    <a class="sidebar-link" onclick="closeSidebar()"><span class="sidebar-icon">ℹ️</span><span>About</span><span class="sidebar-arrow">→</span></a>
+    <div class="sidebar-divider"></div>
+    <a class="sidebar-link sidebar-logout" id="sidebar-auth-btn" onclick="closeSidebar();loginWithGoogle()"><span class="sidebar-icon">🔐</span><span id="sidebar-auth-text">Login</span><span class="sidebar-arrow">→</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-text">© 2099 NIOA. All rights reserved.</div>
+  </div>
+</div>
+
+<div class="wishlist-wrap">
+  <div class="page-header">
+    <div class="page-title">My <span>Wishlist</span></div>
+    <div class="page-count" id="wishlist-count">0 items</div>
+  </div>
+  <div class="wishlist-grid" id="wishlist-grid"></div>
+</div>
+
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Cart</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty"><div class="cart-empty-icon">◈</div><p>Cart is empty</p></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-line"><span class="cl-label">Items</span><span class="cl-val" id="cart-count-label">0</span></div>
+    <div class="cart-line"><span class="cl-label">Shipping</span><span class="cl-val cl-free">Free</span></div>
+    <div class="cart-divider"></div>
+    <div class="cart-total-line"><span class="ctl-label">Total</span><span class="ctl-amount" id="cart-total">$0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Initiate Checkout</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var starsEl = document.getElementById('stars');
+  for (var i = 0; i < 80; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = 'left:' + Math.random()*100 + '%;top:' + Math.random()*100 + '%;--d:' + (2+Math.random()*4) + 's;--o:' + (0.2+Math.random()*0.5) + ';animation-delay:' + Math.random()*4 + 's';
+    starsEl.appendChild(s);
+  }
+
+  var productImages = {
+    'Neural Visor X9':  'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=600&h=600&fit=crop&q=80',
+    'Quantum Earbuds':  'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&h=600&fit=crop&q=80',
+    'HoloWatch Pro':    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop&q=80',
+    'BioSync Band':     'https://images.unsplash.com/photo-1575827239239109-8a85d602b15b?w=600&h=600&fit=crop&q=80',
+    'Plasma Speaker':   'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=600&fit=crop&q=80',
+    'DronePad Mini':    'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=600&fit=crop&q=80',
+    'Smart Jacket AI':  'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=600&fit=crop&q=80',
+    'Holo Projector':   'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=600&fit=crop&q=80',
+    'NanoBot Cleaner':  'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=600&fit=crop&q=80',
+    'AR Glasses Lite':  'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600&h=600&fit=crop&q=80',
+    'Alienware m18 R2': 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/alienware-notebooks/alienware-m18-mlk/spi/ng/notebook-alienware-m18-r2-nt-black-relsize-500-ng.psd?fmt=jpg&wid=500&hei=279',
+    'Alienware x16 R2': 'https://www.dell.com/wp-uploads/2024/02/2-3.jpg',
+    'Alienware m16 R2': 'https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg',
+    'Alienware x14 R2': 'https://sm.ign.com/ign_ap/deal/s/save-700-o/save-700-off-the-alienware-x14-r2-dells-thinnest-and-lightes_tcca.jpg',
+    'Alienware Area-51m R2': 'https://i.ytimg.com/vi/BY2WIwKcaCQ/maxresdefault.jpg'
+  };
+
+  function loadWishlist() {
+    var wishlist = [];
+    try { wishlist = JSON.parse(localStorage.getItem('nioa_wishlist') || '[]'); } catch(e) {}
+
+    var grid = document.getElementById('wishlist-grid');
+    var count = document.getElementById('wishlist-count');
+    var badge = document.getElementById('wishlist-badge');
+
+    if (badge) badge.textContent = wishlist.length;
+    if (count) count.textContent = wishlist.length + ' item' + (wishlist.length !== 1 ? 's' : '');
+
+    if (wishlist.length === 0) {
+      grid.innerHTML =
+        '<div class="empty-wishlist">' +
+          '<div class="empty-wishlist-icon">♡</div>' +
+          '<h3>Your wishlist is empty</h3>' +
+          '<p>Save products you love and come back to them later</p>' +
+          '<button class="browse-btn" onclick="navigateTo(\'index.html\')">Browse Catalog</button>' +
+        '</div>';
+      return;
+    }
+
+    grid.innerHTML = wishlist.map(function(p, i) {
+      var imgUrl = productImages[p.name];
+      var imgHTML = imgUrl
+        ? '<img src="' + imgUrl + '" alt="' + p.name + '" onerror="this.style.display=\'none\'">'
+        : '<div class="wc-img-emoji">' + (p.emoji || '📦') + '</div>';
+
+      return '<div class="wishlist-card" style="animation-delay:' + (i*0.05) + 's">' +
+        '<div class="wc-img">' +
+          imgHTML +
+          '<button class="wc-remove" onclick="removeFromWishlist(\'' + p._id + '\')">✕</button>' +
+        '</div>' +
+        '<div class="wc-info">' +
+          '<div class="wc-cat">' + p.category + '</div>' +
+          '<div class="wc-name">' + p.name + '</div>' +
+          '<div class="wc-bottom">' +
+            '<div class="wc-price">$' + p.price + '</div>' +
+            '<button class="wc-add-btn" onclick="addToCartFromWishlist(\'' + p._id + '\')">+ Add to Cart</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function removeFromWishlist(id) {
+    var wishlist = [];
+    try { wishlist = JSON.parse(localStorage.getItem('nioa_wishlist') || '[]'); } catch(e) {}
+    wishlist = wishlist.filter(function(p) { return p._id !== id; });
+    localStorage.setItem('nioa_wishlist', JSON.stringify(wishlist));
+    loadWishlist();
+  }
+
+  function addToCartFromWishlist(id) {
+    var wishlist = [];
+    try { wishlist = JSON.parse(localStorage.getItem('nioa_wishlist') || '[]'); } catch(e) {}
+    var product = wishlist.find(function(p) { return p._id === id; });
+    if (!product) return;
+    var cart = [];
+    try { cart = JSON.parse(localStorage.getItem('nioa_cart') || '[]'); } catch(e) {}
+    if (!cart.some(function(c) { return c._id === id; })) {
+      cart.push(product);
+      localStorage.setItem('nioa_cart', JSON.stringify(cart));
+      var badge = document.getElementById('badge');
+      if (badge) badge.textContent = cart.length;
+    }
+    showToast(product.name + ' added to cart!');
+  }
+
+  document.addEventListener('DOMContentLoaded', loadWishlist);
+  window.addEventListener('load', loadWishlist);
+</script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

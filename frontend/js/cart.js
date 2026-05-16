@@ -56,37 +56,50 @@ var currentFilter = 'all';
 
 // PRODUCT IMAGES
 var productImages = {
-  'Neural Visor X9':  'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=600&h=600&fit=crop&q=80',
-  'Quantum Earbuds':  'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&h=600&fit=crop&q=80',
-  'HoloWatch Pro':    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop&q=80',
-  'BioSync Band':     'https://images.unsplash.com/photo-1575827239239109-8a85d602b15b?w=600&h=600&fit=crop&q=80',
-  'Plasma Speaker':   'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=600&fit=crop&q=80',
-  'DronePad Mini':    'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=600&fit=crop&q=80',
-  'Smart Jacket AI':  'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=600&fit=crop&q=80',
-  'Holo Projector':   'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=600&fit=crop&q=80',
-  'NanoBot Cleaner':  'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=600&fit=crop&q=80',
-  'AR Glasses Lite':  'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600&h=600&fit=crop&q=80',
- 'Alienware m18 R2': 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/alienware-notebooks/alienware-m18-mlk/spi/ng/notebook-alienware-m18-r2-nt-black-relsize-500-ng.psd?fmt=jpg&wid=500&hei=279',
-'Alienware x16 R2': 'https://www.dell.com/wp-uploads/2024/02/2-3.jpg',
-'Alienware m16 R2':     'https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg',
-'Alienware x14 R2':      'https://sm.ign.com/ign_ap/deal/s/save-700-o/save-700-off-the-alienware-x14-r2-dells-thinnest-and-lightes_tcca.jpg',
-'Alienware Area-51m R2': 'https://i.ytimg.com/vi/BY2WIwKcaCQ/maxresdefault.jpg',
+  'Neural Visor X9':       'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=600&h=600&fit=crop&q=80',
+  'Quantum Earbuds':       'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&h=600&fit=crop&q=80',
+  'HoloWatch Pro':         'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop&q=80',
+  'BioSync Band':          'https://images.unsplash.com/photo-1575827239239109-8a85d602b15b?w=600&h=600&fit=crop&q=80',
+  'Plasma Speaker':        'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=600&fit=crop&q=80',
+  'DronePad Mini':         'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=600&fit=crop&q=80',
+  'Smart Jacket AI':       'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=600&fit=crop&q=80',
+  'Holo Projector':        'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=600&fit=crop&q=80',
+  'NanoBot Cleaner':       'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=600&fit=crop&q=80',
+  'AR Glasses Lite':       'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600&h=600&fit=crop&q=80',
+  'Alienware m18 R2':      'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/alienware-notebooks/alienware-m18-mlk/spi/ng/notebook-alienware-m18-r2-nt-black-relsize-500-ng.psd?fmt=jpg&wid=500&hei=279',
+  'Alienware x16 R2':      'https://www.dell.com/wp-uploads/2024/02/2-3.jpg',
+  'Alienware m16 R2':      'https://cdn.mos.cms.futurecdn.net/ht4C4qRVGg5NnwQm3WLsrK.jpg',
+  'Alienware x14 R2':      'https://sm.ign.com/ign_ap/deal/s/save-700-o/save-700-off-the-alienware-x14-r2-dells-thinnest-and-lightes_tcca.jpg',
+  'Alienware Area-51m R2': 'https://i.ytimg.com/vi/BY2WIwKcaCQ/maxresdefault.jpg'
 };
 
 // INIT
-async function init() {
+function init() {
+  // Restore cart badge
   var badge = document.getElementById('badge');
   if (badge) badge.textContent = cart.length;
 
-  try {
-    allProducts = await fetchProducts();
-    filterAndRender('');
-  } catch(e) {
-    var grid = document.getElementById('products-grid');
-    var label = document.getElementById('products-label');
-    if (grid) grid.innerHTML = '<div class="empty-state">Backend not running — start with npm run dev</div>';
-    if (label) label.textContent = '0 items';
+  // Restore wishlist badge
+  var wBadge = document.getElementById('wishlist-badge');
+  if (wBadge) {
+    var wl = [];
+    try { wl = JSON.parse(localStorage.getItem('nioa_wishlist') || '[]'); } catch(e) {}
+    wBadge.textContent = wl.length;
   }
+
+  updateCartUI();
+
+  var grid = document.getElementById('products-grid');
+  if (!grid) return;
+
+  fetchProducts().then(function(products) {
+    allProducts = products;
+    filterAndRender('');
+  }).catch(function() {
+    if (grid) grid.innerHTML = '<div class="empty-state">Backend not running — start with npm run dev</div>';
+    var label = document.getElementById('products-label');
+    if (label) label.textContent = '0 items';
+  });
 
   var searchEl = document.getElementById('search');
   if (searchEl) {
@@ -107,8 +120,6 @@ async function init() {
 
   var cartBtn = document.getElementById('cart-btn');
   if (cartBtn) cartBtn.addEventListener('click', openCart);
-
-  updateCartUI();
 }
 
 function filterAndRender(query) {
@@ -148,12 +159,12 @@ function renderProducts(products) {
       : '';
 
     return '<div class="product-card" style="animation-delay:' + (i * 0.04) + 's" onclick="navigateTo(\'product.html?id=' + p._id + '\')">' +
-     '<div class="card-img">' +
-  badge +
-  '<div class="card-glow"></div>' +
-  getImageHTML(p) +
-  '<button class="card-qv-btn" onclick="event.stopPropagation();openQuickView(\'' + p._id + '\')">⊙ Quick View</button>' +
-'</div>' +
+      '<div class="card-img">' +
+        badge +
+        '<div class="card-glow"></div>' +
+        getImageHTML(p) +
+        '<button class="card-qv-btn" onclick="event.stopPropagation();openQuickView(\'' + p._id + '\')">⊙ Quick View</button>' +
+      '</div>' +
       '<div class="card-info">' +
         '<div class="card-cat">' + p.category + '</div>' +
         '<div class="card-name">' + p.name + '</div>' +
@@ -162,9 +173,12 @@ function renderProducts(products) {
             '<span class="price-now">$' + p.price + '</span>' +
             (p.oldPrice ? '<span class="price-was">$' + p.oldPrice + '</span>' : '') +
           '</div>' +
-          '<button class="add-btn ' + (inCart ? 'added' : '') + '" onclick="event.stopPropagation();addToCart(\'' + p._id + '\')">' +
-            (inCart ? '✓ Added' : '+ Add') +
-          '</button>' +
+          '<div style="display:flex;gap:6px">' +
+            '<button class="wishlist-card-btn" onclick="event.stopPropagation();addToWishlist(\'' + p._id + '\')" title="Add to Wishlist">♡</button>' +
+            '<button class="add-btn ' + (inCart ? 'added' : '') + '" onclick="event.stopPropagation();addToCart(\'' + p._id + '\')">' +
+              (inCart ? '✓' : '+') +
+            '</button>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -187,13 +201,30 @@ function addToCart(id) {
   updateCartUI();
   var s = document.getElementById('search');
   filterAndRender(s ? s.value : '');
-  showToast(product.name + ' added');
+  showToast(product.name + ' added to cart');
   var badge = document.getElementById('badge');
   if (badge) {
     badge.classList.remove('bump');
     void badge.offsetWidth;
     badge.classList.add('bump');
   }
+}
+
+// ADD TO WISHLIST
+function addToWishlist(id) {
+  var product = allProducts.find(function(p) { return p._id === id; });
+  if (!product) return;
+  var wishlist = [];
+  try { wishlist = JSON.parse(localStorage.getItem('nioa_wishlist') || '[]'); } catch(e) {}
+  if (wishlist.some(function(p) { return p._id === id; })) {
+    showToast('Already in wishlist!');
+    return;
+  }
+  wishlist.push(product);
+  localStorage.setItem('nioa_wishlist', JSON.stringify(wishlist));
+  var wBadge = document.getElementById('wishlist-badge');
+  if (wBadge) wBadge.textContent = wishlist.length;
+  showToast(product.name + ' added to wishlist ♡');
 }
 
 // ADD TO CART (product detail page)
@@ -260,6 +291,7 @@ function updateCartUI() {
   }).join('');
 }
 
+// CART OPEN/CLOSE
 function openCart() {
   document.getElementById('cart-overlay').classList.add('open');
   document.getElementById('cart-drawer').classList.add('open');
@@ -270,6 +302,53 @@ function closeCart() {
   document.getElementById('cart-drawer').classList.remove('open');
 }
 
+// QUICK VIEW
+function openQuickView(id) {
+  var p = allProducts.find(function(p) { return p._id === id; });
+  if (!p) return;
+
+  var imgUrl = productImages[p.name];
+  var imgHTML = imgUrl
+    ? '<img src="' + imgUrl + '" alt="' + p.name + '">'
+    : '<div class="qv-img-emoji">' + (p.emoji || '📦') + '</div>';
+
+  var badge = p.badge === 'new'
+    ? '<span class="qv-badge badge-new">New</span>'
+    : p.badge === 'sale'
+    ? '<span class="qv-badge badge-sale">Sale</span>'
+    : '';
+
+  var stars = '★'.repeat(p.stars || 4) + '☆'.repeat(5 - (p.stars || 4));
+  var inCart = cart.some(function(c) { return c._id === p._id; });
+
+  document.getElementById('qv-img').innerHTML = imgHTML;
+  document.getElementById('qv-info').innerHTML =
+    badge +
+    '<div class="qv-cat">' + p.category + '</div>' +
+    '<div class="qv-name">' + p.name + '</div>' +
+    '<div class="qv-stars">' + stars + '</div>' +
+    '<div class="qv-price">' +
+      '<span class="qv-price-now">$' + p.price + '</span>' +
+      (p.oldPrice ? '<span class="qv-price-was">$' + p.oldPrice + '</span>' : '') +
+    '</div>' +
+    '<div class="qv-desc">' + (p.description || 'Premium futuristic product from the NIOA catalog.') + '</div>' +
+    '<div class="qv-actions">' +
+      '<button class="qv-add-btn" onclick="addToCart(\'' + p._id + '\');closeQuickView()">' +
+        (inCart ? '✓ Already in Cart' : '+ Add to Cart') +
+      '</button>' +
+      '<div class="qv-detail-btn" onclick="closeQuickView();navigateTo(\'product.html?id=' + p._id + '\')">View Full Details →</div>' +
+    '</div>';
+
+  document.getElementById('qv-overlay').classList.add('open');
+}
+
+function closeQuickView(e) {
+  if (e && e.target !== document.getElementById('qv-overlay')) return;
+  var overlay = document.getElementById('qv-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+// TOAST
 function showToast(msg) {
   var t = document.getElementById('toast');
   if (!t) return;
@@ -278,23 +357,24 @@ function showToast(msg) {
   setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
 
-async function checkout() {
+// CHECKOUT
+function checkout() {
   if (cart.length === 0) return showToast('Cart is empty');
   if (!getToken()) return loginWithGoogle();
-  try {
-    var items = cart.map(function(p) { return { product: p._id, name: p.name, price: p.price }; });
-    var total = cart.reduce(function(s, p) { return s + p.price; }, 0);
-    await placeOrder(items, total);
+  var items = cart.map(function(p) { return { product: p._id, name: p.name, price: p.price }; });
+  var total = cart.reduce(function(s, p) { return s + p.price; }, 0);
+  placeOrder(items, total).then(function() {
     cart = [];
     localStorage.setItem('nioa_cart', JSON.stringify(cart));
     updateCartUI();
     closeCart();
     showToast('Order confirmed!');
-  } catch(e) {
+  }).catch(function() {
     showToast('Checkout failed');
-  }
+  });
 }
 
+// NEWSLETTER
 function handleSubscribe() {
   var input = document.querySelector('.newsletter-input');
   if (input && input.value.includes('@')) {
@@ -423,50 +503,6 @@ function initHero() {
   drawParticles();
 }
 
-// QUICK VIEW
-function openQuickView(id) {
-  var p = allProducts.find(function(p) { return p._id === id; });
-  if (!p) return;
-
-  var imgUrl = productImages[p.name];
-  var imgHTML = imgUrl
-    ? '<img src="' + imgUrl + '" alt="' + p.name + '">'
-    : '<div class="qv-img-emoji">' + (p.emoji || '📦') + '</div>';
-
-  var badge = p.badge === 'new'
-    ? '<span class="qv-badge badge-new">New</span>'
-    : p.badge === 'sale'
-    ? '<span class="qv-badge badge-sale">Sale</span>'
-    : '';
-
-  var stars = '★'.repeat(p.stars || 4) + '☆'.repeat(5 - (p.stars || 4));
-  var inCart = cart.some(function(c) { return c._id === p._id; });
-
-  document.getElementById('qv-img').innerHTML = imgHTML;
-  document.getElementById('qv-info').innerHTML =
-    badge +
-    '<div class="qv-cat">' + p.category + '</div>' +
-    '<div class="qv-name">' + p.name + '</div>' +
-    '<div class="qv-stars">' + stars + '</div>' +
-    '<div class="qv-price">' +
-      '<span class="qv-price-now">$' + p.price + '</span>' +
-      (p.oldPrice ? '<span class="qv-price-was">$' + p.oldPrice + '</span>' : '') +
-    '</div>' +
-    '<div class="qv-desc">' + (p.description || 'Premium futuristic product from the NIOA catalog.') + '</div>' +
-    '<div class="qv-actions">' +
-      '<button class="qv-add-btn" onclick="addToCart(\'' + p._id + '\');closeQuickView()">' +
-        (inCart ? '✓ Already in Cart' : '+ Add to Cart') +
-      '</button>' +
-      '<div class="qv-detail-btn" onclick="closeQuickView();navigateTo(\'product.html?id=' + p._id + '\')">View Full Details →</div>' +
-    '</div>';
-
-  document.getElementById('qv-overlay').classList.add('open');
-}
-
-function closeQuickView(e) {
-  if (e && e.target !== document.getElementById('qv-overlay')) return;
-  document.getElementById('qv-overlay').classList.remove('open');
-}
 document.addEventListener('DOMContentLoaded', function() {
   initHero();
   init();
